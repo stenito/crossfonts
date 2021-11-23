@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>
+        console.log(`starting script execution: ${performance.now().toFixed(2)}ms`);
+    </script>
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+    <link rel="preload"
+          as="style"
+          href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@100..900&display:swap" />
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@100..900&display:swap"
+          media="print"
+          onload="this.media='all'" />
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>Crossfonts: cross-browser sans-serif font-family</title>
+    <link rel="stylesheet"
+          href="style.css">
+</head>
+
+<body>
+    <main>
+    <article>
+    <h1>Crossfonts: cross-browser sans-serif font-family</h1>
+    <p><small>Open Source. Published under MIT license.</small></p>
+    <p>Crossfonts uses a small sans-serif font family with 9 font weights,
+        available on all OS/browsers. It minimizes the loading of external fonts
+        on Apple devices. It preconnects, preloads and prioretizes "Public Sans"
+        for all other platforms since their system fonts do not offer all 9 font
+        weights. (More testing to be done!)</p>
+    <p><strong>WARNING!!!</strong> This is an attempt to get 9 font-weights accross all browsers and
+        not ready for production in it's current form.</p>
+        <p>This page uses an overlay to hide the content untill the fonts are loaded and ready for rendering. Not sure if that is a good thing but I don't like the three stooges of webfonts: <code>FOUT</code>, <code>FOIT</code> and <code>FOFT</code>.</p>
+    <div id="test">
+        <p id="rendered">The text on this page is rendered in <span
+                  id="fontfamily">&mdash;testing&mdash;</span>.</p>
+    </div>
+    <div id="example">
+        <div class="countered"
+             style='font-weight: 900'>The quick brown fox</div>
+        <div class="countered"
+             style='font-weight: 800'>The quick brown fox</div>
+        <div class="countered"
+             style='font-weight: 700'>The quick brown fox</div>
+        <div class="countered"
+             style='font-weight: 600'>The quick brown fox</div>
+        <div class="countered"
+             style='font-weight: 500'>The quick brown fox</div>
+        <div class="countered"
+             style='font-weight: 400'>The quick brown fox</div>
+        <div class="countered"
+             style='font-weight: 300'>The quick brown fox</div>
+        <div class="countered"
+             style='font-weight: 200'>The quick brown fox</div>
+        <div class="countered"
+             style='font-weight: 100'>The quick brown fox</div>
+    </div>
+    </article>
+    <article>
+    <h2>Public Sans</h2>
+    <p>The goal of crossfonts is to offer consistency over platforms/browsers.
+        Public Sans is available on Google Fonts and is the best available match
+        for San Fransisco.</p>
+    <div class="compare">
+        <div class="image">
+            <p>Image (San Fransisco)</p>
+            <img src="sample.png"
+                 alt="The quick brow fox, font sample in San Fransisco">
+        </div>
+        <div id="publicsans">
+            <p>Text (Public Sans)</p>
+            <div class="countered"
+                 style='font-weight: 900'>The quick brown fox</div>
+            <div class="countered"
+                 style='font-weight: 800'>The quick brown fox</div>
+            <div class="countered"
+                 style='font-weight: 700'>The quick brown fox</div>
+            <div class="countered"
+                 style='font-weight: 600'>The quick brown fox</div>
+            <div class="countered"
+                 style='font-weight: 500'>The quick brown fox</div>
+            <div class="countered"
+                 style='font-weight: 400'>The quick brown fox</div>
+            <div class="countered"
+                 style='font-weight: 300'>The quick brown fox</div>
+            <div class="countered"
+                 style='font-weight: 200'>The quick brown fox</div>
+            <div class="countered"
+                 style='font-weight: 100'>The quick brown fox</div>
+        </div>
+    </div>
+    </article>
+    <article>
+    <h2>Usage</h2>
+    <h3>Font-family</h3>
+    <p>Set this font family in your stylsesheet.</p>
+    <pre class="css">
+html {
+  font-family: -apple-system, BlinkMacSystemFont, "Public Sans", sans-serif;
+}
+
+</pre>
+    <h3>Set the webfont</h3>
+    <p>Add this code to the top of the head section of your HTML.</p>
+    <pre class="html">
+&#x3C;link rel=&#x22;preconnect&#x22; href=&#x22;https://fonts.googleapis.com&#x22;&#x3E;
+&#x3C;link rel=&#x22;preconnect&#x22; href=&#x22;https://fonts.gstatic.com&#x22; crossorigin&#x3E;
+&#x3C;link rel=&#x22;preload&#x22; as=&#x22;style&#x22; href=&#x22;https://fonts.googleapis.com/css2?family=Public+Sans:wght@100..900&#x26;display:swap&#x22; /&#x3E;
+&#x3C;link rel=&#x22;stylesheet&#x22; href=&#x22;https://fonts.googleapis.com/css2?family=Public+Sans:wght@100..900&#x26;display:swap&#x22; media=&#x22;print&#x22; onload=&#x22;this.media=&#x27;all&#x27;&#x22; /&#x3E;
+
+</pre>
+    <ol>
+        <li>It preconnects to the domains where the web font is hosted.</li>
+        <li>Then preloads the font.</li>
+        <li>Since sylesheets are render blocking, tricking the browser into
+            thinking the stylesheet is for print (and needs no rendering) makes
+            it use an asynchronous load.</li>
+    </ol>
+    </article>
+    <article>
+    <h2>Detecting the redered font</h2>
+    <p>Since javaScript can not detect the actual font used to render the text,
+        we can use a trick to detect which font of the defined family will
+        render. (Kudos to <a
+           href="https://stackoverflow.com/users/7262906/pierre-lang">Pierre
+            Lang</a> for his method.)</p>
+    <blockquote>Define your proper font-face, which you are sure does not match
+        any existing font. Then, add your font after each computed style font,
+        and see if it's your font that gets rendered. If it's not, congrats, you
+        found the rendered font!</blockquote>
+        </article>
+        <article>
+    <h2>Web Fonts loading speed</h2>
+    <p>Since web fonts are not as fast as a system font, the first visit to a
+        domain needs time to load the font.</p>
+    <p>There are a few options to make that faster.</p>
+    <ol>
+        <li>Use a CDN. The font is most likely cached on their servers.</li>
+        <li>Use preconnect, preload and DO NOT use @import of @font-face. See
+            the code of the page for usage.</li>
+    </ol>
+    </article>
+    <article>
+    <h2>Testing results</h2>
+    <p>If the nice people of <a href="https://browserstack.com"
+           target="_blank">BrowserStack</a> grant me an open source access, I
+        will test on all browsers and publish results and continue working on making this a production ready option for a valid open-source cross-browser sans-serif font-family :).</p>
+    <div class="resultline">
+        <div class="header">Browser / OS</div>
+        <div class="header">Font</div>
+    </div>
+    <div class="resultline">
+        <div class="browser">Chrome / Monterey</div>
+        <div class="fontused">system-ui (".SF NS")</div>
+    </div>
+    <div class="resultline">
+        <div class="browser">Safari / Monterey</div>
+        <div class="fontused">-apple-system (".AppleSystemUIFont")</div>
+    </div>
+    <div class="resultline">
+        <div class="browser">Opera / Monterey</div>
+        <div class="fontused">system-ui (".SF NS")</div>
+    </div>
+    <div class="resultline">
+        <div class="browser">Firefox / Monterey</div>
+        <div class="fontused">-apple-system (".SF NS")</div>
+    </div>
+    <div class="resultline">
+        <div class="browser">Brave / Monterey</div>
+        <div class="fontused">system-ui (".SF NS")</div>
+    </div>
+    <div class="resultline">
+        <div class="browser">Edge / Monterey</div>
+        <div class="fontused">system-ui (".SF NS")</div>
+    </div>
+    <div class="resultline">
+        <div class="browser">Edge / Windows 10</div>
+        <div class="fontused">Public Sans</div>
+    </div>
+    <div class="resultline">
+        <div class="browser">Chrome / Windows 10</div>
+        <div class="fontused">Public Sans</div>
+    </div>
+    <div class="resultline">
+        <div class="browser">Firefox / Windows 10</div>
+        <div class="fontused">Public Sans</div>
+    </div>
+    <p><b>To be tested:</b></p>
+    <ul>
+        <li>All browsers</li>
+        <li>All OS</li>
+        <li>Rendered font(s)</li>
+        <li>Loading times (on different connection speeds)</li>
+        <li>...</li>
+    </ul>
+    </article>
+    <article>
+        <h2>Current roadmap (in sort-of random order for now...)</h2>
+        <ul>
+            <li>Extra testing</li>
+            <li>Github/NPM</li>
+            <li>Research faster webfont loading and implement if possible.</li>
+            <li>Refactor JS of this page</li>
+            <li>Define font-family 1.0.0</li>
+            <li>Implement as an option in CSS+ (coming soon :))</li>
+            <li>...</li>
+        </ul>
+    </article>
+    <article>
+    <h2>Contact information</h2>
+    <p>info@stenito.com</p>
+    </article>
+    </main>
+    <div id="overlay"> Fonts are loading... </div>
+    <script>
+        async function isReady() { console.log(`fonts are loading : ${performance.now().toFixed(2)}ms`), await document.fonts.ready && (showfontfamily(), document.getElementById("overlay").classList.add("hide"), console.log(`fonts are loaded : ${performance.now().toFixed(2)}ms`)) } function showfontfamily() { document.getElementById("fontfamily").innerText = '"' + getRenderedFontFamily(document.getElementById("test")) + '"' } !function (A) { var e = null; function t(A) { if (A.remove) A.remove(); else { var e = A.parentElement; null != e && e.removeChild(A) } } !function (A, t) { if ("string" != typeof t && (t = JSON.stringify(t).trim()), t.startsWith("{") && t.endsWith("}") && (t = t.substring(1, t.length - 1)), null == e) { (e = document.createElement("style")).type = "text/css"; var n = document.getElementsByTagName("head"); if (n.length = 0) { var l = document.createElement("head"); document.insertBefore(l, document.body), n = [l] } n[0].appendChild(e) } var o; (e.sheet || {}).insertRule ? (e.sheet.insertRule(A + "{" + t + "}", 0), o = e.sheet) : o = (e.styleSheet || e.sheet).addRule(A, t) }("@font-face", "{ font-family: 'void';  src: url(data:application/font-woff2;charset=utf-8;base64,d09GMgABAAAAAAPQAA0AAAAAJLwAAAN2AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP0ZGVE0cGh4GYACCehEICrcUtUcLgVYAATYCJAODGgQgBYQrB4IOGy8iyD4M2GTIPrT6WF2CYVmsrZSME0Lxo0HkLsnMe3J+bjz8/1jtvj/u6wnzjEfTZlY97lD30CyaNpNQaV4SibwX23xgzQx8YoKmJQvZq6ZBWjJtbams7UgryfyPub1/XCfUSbdKmihiPrNKphKi5QzxL7t7f4Ygsik2JcsCqWjBhCpFOWuA+r3/lb/f/ynl4AsvOYHFxycux78I1qIX+gd5kXU+ZsO7wLswbYM/aGDRxjV8TPCAshIIMC3BsAwDkAAb0NvIC+Bt1UII+PmLFgF/hd0tbtmBKvpAEsJFJIuEZDoXOdKdvlnrANSzuI5ODoqTBnPXWUMoMLdg3mfM5HgyMvzfCugCzEGQYQ45BQFX1ASmGBwDbTaYhJrjHt5r10f62D9QM6cHAk2AuaL8WWyod/QWEE4QLaFWFCqRyTS5fKGWdOtLt+d0B+sPBEPhSDQWTyRT6Uw2ly8US+VKtVZv8IIoyYqqQd9Ny3bcZqvd6fb6g+FoPJnO5ovlar3Z7vYA5ScZ7ex193Bz+4z/ClwC/AB8oXoA1Q/QBEggoUqTYA8V8QP3xWofHHUvrXZRqXfN8qbGV8YZV/BYWfkBegAgFnoLMY558+Pt8rg7Lt/z7D56vHHjeA/kHpUZZIyeL9n5vJD5V237BwsBgH8gRAhBCAmRRAYRurBwyYHg13/L7+pCvTFrmXM6isP3aQYoSiBYmswqCfwfekQgMH26vOBlp5nIt6nNIJs88OmzLcScJXAJBwUBOeW2FwjQk4KAkLULgaTgJAIZWZcRyMq6KUBOxX0B8rLeC1DT8waBuokUYKIpYQXQyFC0nUzq9pMZRReBLHKDzOlbk3lFr8maFR5HqdvkgxFXG6MrdRFjNCViJUaL5+QiVrjAwbN9F7h5QMLZB9QKuCbhOcOWi97AARc3ldBBDi8bFfJTmJ/1iItcwZOIMfIycmDvY6ScyfmvdqFTF5QimmrIbmrhJOdJlQqCBU9IMJG7EXVZ2rAZzfk/h3ThhdtKRD2rDSRULcKD5KXtU+4+qq9BUUlZRVVNXUOTnYOTi5sHjkCi0BgsjpePX0BQSFhEVExcQlJKWkZWTl5BUUlZRVVNXQNPIJLIFCqNwWSxOVxNLW0dXT19A0MjYxNTM3MLSytrG1s7ewffpMhE1htvffTO++5q7O2mciQwb+6tAgAAAA==) format('woff2'), url(data:application/font-woff;charset=utf-8;base64,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) format('woff'); }"); var n = document.createElement("span"); n.innerHTML = "0123", n.style.display = "inline-block", n.style.fontFamily = "void", document.body.appendChild(n), setTimeout((function () { t(n) }), 0), A.getRenderedFontFamily = function (e, n) { var l = ((void 0 === n ? A.getComputedStyle(e) : n).fontFamily || e.style["font-family"] || "").replace(/['"]*/g, ""), o = l.split(","), i = document.createElement("span"); i.innerHTML = "0123", i.style.display = "inline-block", i.style.fontFamily = "void", e.appendChild(i); for (var a = window.getComputedStyle(i), r = a.width, d = {}; null != o;) { for (var f = 0; f < o.length; f++)if (!d[o[f]]) { if (i.style.fontFamily = o[f] + ", void", a.width != r) return t(i), o[f].trim(); d[o[f]] = !0 } if (e.parentElement) e = e.parentElement, o = (l = (A.getComputedStyle(e).fontFamily || e.style["font-family"] || "").replace(/['"]*/g, "")).split(","); else o = null } t(i) } }(window), isReady();
+        var __djsf = function () { var e = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 2, t = arguments.length > 1 ? arguments[1] : undefined, n = arguments.length > 2 ? arguments[2] : undefined; if (document.querySelectorAll("[rel*=icon]").length < 1) { var a, l = document, i = l.title.split(" "); if (t) n || (n = "white"); else { for (var r = [], c = 0; c < 3; c++)r.push(Math.round(255 * Math.random())); var s = Math.round((299 * parseInt(r[0]) + 587 * parseInt(r[1]) + 114 * parseInt(r[2])) / 1e3); t = "rgb(".concat(r[0], ",").concat(r[1], ",").concat(r[2], ")"), n = s > 125 ? "black" : "white" } a = 2 == e && i.length > 1 ? i[0].substr(0, 1) + i[1].substr(0, 1) : 2 == e && 1 == i.length ? i[0].substr(0, 2) : i[0].substr(0, 1); var d = l.createElement("canvas"), h = d.getContext("2d"), o = l.createElement("link"); d.width = 160, d.height = 160, h.beginPath(), h.arc(80, 80, 80, 0, 2 * Math.PI), h.fillStyle = t, h.fill(), h.font = "95px Arial", h.fillStyle = n, h.textAlign = "center", h.textBaseline = "middle", h.fillText(a, 80, 85), o.type = "image/x-icon", o.rel = "icon", o.href = d.toDataURL("image/x-icon"), l.getElementsByTagName("head")[0].appendChild(o) } }; __djsf(1);
+    </script>
+</body>
+
+</html>
