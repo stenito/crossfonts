@@ -1,19 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="font-family: -apple-system, BlinkMacSystemFont,  sans-serif;">
 
 <head>
-    <link rel="preconnect"
-          href="https://fonts.googleapis.com">
-    <link rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossorigin>
-    <link rel="preload"
-          as="style"
-          href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@100..900&display:swap" />
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@100..900&display:swap"
-          media="print"
-          onload="this.media='all'" />
     <link rel="icon"
           href="favicon.png"
           type="image/x-icon">
@@ -33,7 +21,7 @@
             <br>
             <a href="index-no-overlay.html">No overlay</a>
             <code>(FOUT possible)</code><br>
-            <a href="index-no-webfont.html">No webfont</a>
+            <a href="/">With webfont</a>
         </p>
         <article>
             <h1>Crossfonts: cross-browser sans-serif font-family</h1>
@@ -89,8 +77,8 @@
                     <img src="sample.png"
                          alt="The quick brow fox, font sample in San Fransisco">
                 </div>
-                <div id="publicsans">
-                    <p>Text (Public Sans)</p>
+                <div id="publicsans" style="font-family: -apple-system, BlinkMacSystemFont, sans-serif;">
+                    <p>Text (Public Sans not loaded)</p>
                     <div class="countered"
                          style='font-weight: 900'>The quick brown fox</div>
                     <div class="countered"
