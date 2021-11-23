@@ -1,6 +1,6 @@
 # crossfonts
 Crossfonts: open-source cross-browser sans-serif font-family
 
-[Find it here](https://crossfonts.stenito.com) (https://crossfonts.stenito.com
+[Website lives here](https://crossfonts.stenito.com) 
 
 
