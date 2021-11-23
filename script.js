@@ -1,10 +1,16 @@
+var logger = document.getElementById("logger");
+logger.innerHTML += `- starting script execution: ${performance
+    .now()
+    .toFixed(2)}ms<br>`;
+
 async function isReady() {
-    console.log(`fonts are loading : ${performance.now().toFixed(2)}ms`);
     let ready = await document.fonts.ready;
     if (ready) {
         showfontfamily();
         document.getElementById("overlay").classList.add("hide");
-        console.log(`fonts are loaded : ${performance.now().toFixed(2)}ms`);
+        logger.innerHTML += `- fonts are loaded: ${performance
+            .now()
+            .toFixed(2)}ms<br>`;
     }
 }
 
